@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PsCid-Enum-Process", "PsCid-Enum-Process\PsCid-Enum-Process.vcxproj", "{6A3AE7C1-9B4B-4845-AC8A-2EF0762FA4E8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StartProcess", "StartProcess\StartProcess.vcxproj", "{9DD88BCC-04A3-4867-A20E-E272A02CB982}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		SYS|x64 = SYS|x64
@@ -15,6 +17,10 @@ Global
 		{6A3AE7C1-9B4B-4845-AC8A-2EF0762FA4E8}.SYS|x64.Build.0 = SYS|x64
 		{6A3AE7C1-9B4B-4845-AC8A-2EF0762FA4E8}.SYS|x86.ActiveCfg = SYS|Win32
 		{6A3AE7C1-9B4B-4845-AC8A-2EF0762FA4E8}.SYS|x86.Build.0 = SYS|Win32
+		{9DD88BCC-04A3-4867-A20E-E272A02CB982}.SYS|x64.ActiveCfg = SYS|x64
+		{9DD88BCC-04A3-4867-A20E-E272A02CB982}.SYS|x64.Build.0 = SYS|x64
+		{9DD88BCC-04A3-4867-A20E-E272A02CB982}.SYS|x86.ActiveCfg = SYS|Win32
+		{9DD88BCC-04A3-4867-A20E-E272A02CB982}.SYS|x86.Build.0 = SYS|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -121,6 +121,10 @@ NTSTATUS EnumPspCidTable()
 
 
 	ulTableCode = (ULONG_PTR)(HandleTable->TableCode) & 0xFFFFFFFFFFFFFFFC;
+	//TableCode和11(2)进行与运算 
+	//三种情况：1、00一层表
+	//2、01两层表
+	//3、10三层表
 	ulFlag = (ULONG)(HandleTable->TableCode) & 0x03;
 	DbgPrint("uTableCode->%08p", ulTableCode);
 
@@ -191,23 +195,23 @@ ULONG_PTR GetPspCidTableValue()
 				ulOffset = 0x10;
 				ulImageNameOffset = 0x2e0;
 				ObjectTableOffsetOf_EPROCESS = 0X200;
-ObjectHeaderSize = 0x30;
+				ObjectHeaderSize = 0x30;
+				//使用特征码进行判断
+				for (uIndex = 0; uIndex < 0x1000; uIndex++)
+				{
+					if (*((PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex)) == 0x48 &&
+						*((PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + 1)) == 0x8B &&
+						*((PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + 7)) == 0xE8)
+					{
 
-for (uIndex = 0; uIndex < 0x1000; uIndex++)
-{
-	if (*((PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex)) == 0x48 &&
-		*((PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + 1)) == 0x8B &&
-		*((PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + 7)) == 0xE8)
-	{
+						memcpy(&Offset, (PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + 3), 4);
+						ulPspCidTableValue = (ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + Offset + 7;
 
-		memcpy(&Offset, (PUCHAR)((ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + 3), 4);
-		ulPspCidTableValue = (ULONG_PTR)PsLookupProcessByProcessIdAddress + uIndex + Offset + 7;
-
-		DbgPrint("Found OK!!\r\n");
-		break;
-	}
-}
-break;
+						DbgPrint("Found OK!!\r\n");
+						break;
+					}
+				}
+				break;
 			}
 		case WINDOWS_XP:
 		{
